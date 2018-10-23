@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add React in One Minute</title>
+    <link rel="stylesheet" href="demo-styles.css">
+
+    <script>
+        var Polymer = Polymer || {};
+        Polymer.dom = 'shady';
+
+        /**
+         * Helper function to deal with async loading
+         * Executes the callback as soon as the factfinder var is available
+         * @param callback
+         */
+        function getFACTFinder(callback) {
+            var ff = window.factfinder || void 0;
+            if (ff) {
+                callback(ff);
+            } else {
+                document.addEventListener("ffReady", function () {
+                    callback(window.factfinder);
+                });
+            }
+        }
+        console.time("WebComponentsReady");
+        document.addEventListener("WebComponentsReady", function () {
+            console.timeEnd("WebComponentsReady");
+        });
+    </script>
+
+    <!--load ff-web-components async so rendering can occur sooner-->
+    <script async src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link async rel="import" href="bower_components/ff-web-components/dist/elements.build_with_dependencies.html">
+</head>
+<body>
+
+<ff-communication url="https://search-web-components.fact-finder.de/FACT-Finder-7.2"
+                  version="7.2"
+                  default-query="bagpack"
+                  channel="bergfreunde-co-uk"
+                  search-immediate>
+</ff-communication>
+
+<h2>Add React in One Minute</h2>
+<p>This page demonstrates using React with no build tooling.</p>
+<p>React is loaded as a script tag.</p>
+
+<!-- We will put our React component inside this div -->
+<div id="like_button_container"></div>
+<div id="ff-communication_container"></div>
+<div id="records_container"></div>
+
+<!-- Load React. -->
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+<script async src="ff-communication.js"></script>
+<script async src="components/react-record-list-component.js"></script>
+</body>
+</html>
