@@ -1,6 +1,6 @@
 **EXPERIMENTAL** - REACT Lab
 ===============================
-WARNING: This is experimental code and should'nt be used in production.
+WARNING: This is experimental code and shouldn't be used in production.
 
 This repo is used to do a proper POC combining FACT-Finder Web Components with REACT Components
 
