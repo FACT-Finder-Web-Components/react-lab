@@ -1,12 +1,13 @@
 {
-  "name": "ff-web-components-demo",
-  "version": "1.0.0",
-  "description": "A demo demonstrating the usage of FACT-Finder Web Components",
-  "main": "start.js",
+  "name": "react-lab",
+  "version": "0.0.1",
+  "description": "A ",
+  "main": "index.html",
   "dependencies": {
-    "connect": "^3.5.0",
-    "open": "0.0.5",
-    "serve-static": "^1.11.1"
+    "ff-web-components": "https://github.com/FACT-Finder-Web-Components/ff-web-components.git#1.2.12",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "webcomponentsjs": "https://github.com/webcomponents/webcomponentsjs.git#v0.7.24"
   },
   "devDependencies": {},
   "scripts": {
@@ -20,9 +21,6 @@
     "FACT-Finder"
   ],
   "license": "FACT-Finder",
-  "bugs": {
-    "url": "https://github.com/FACT-Finder/ff-web-components-demo/issues"
-  },
   "private": true,
   "homepage": "http://web-components.fact-finder.de/"
 }
