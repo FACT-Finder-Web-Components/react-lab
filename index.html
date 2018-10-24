@@ -24,6 +24,26 @@
                 });
             }
         }
+
+        /**
+         * Helper function to deal with async loading
+         * Resolves as soon as the factfinder var is available
+         *
+         * @returns {Promise.<*>}
+         */
+        async function ff() {
+            var ff = window.factfinder || void 0;
+            if (ff) {
+                return ff;
+            } else {
+                return new Promise(function (resolve, reject) {
+                    document.addEventListener("ffReady", function () {
+                        resolve(window.factfinder);
+                    });
+                })
+            }
+        }
+
         console.time("WebComponentsReady");
         document.addEventListener("WebComponentsReady", function () {
             console.timeEnd("WebComponentsReady");
@@ -31,8 +51,8 @@
     </script>
 
     <!--load ff-web-components async so rendering can occur sooner-->
-    <script async src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link async rel="import" href="bower_components/ff-web-components/dist/elements.build_with_dependencies.html">
+    <script async src="node_modules/ff-web-components/node_modules/webcomponents.js/webcomponents-lite.min.js"></script>
+    <link async rel="import" href="node_modules/ff-web-components/dist/elements.build_with_dependencies.html">
 </head>
 <body>
 
@@ -49,15 +69,13 @@
 
 <!-- We will put our React component inside this div -->
 <div id="like_button_container"></div>
-<div id="ff-communication_container"></div>
 <div id="records_container"></div>
 
 <!-- Load React. -->
 <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="node_modules/react/umd/react.development.js"></script>
+<script src="node_modules/react-dom/umd/react-dom.development.js"></script>
 
-<script async src="ff-communication.js"></script>
-<script async src="components/react-record-list-component.js"></script>
+<script src="components/react-record-list-component.js"></script>
 </body>
 </html>
