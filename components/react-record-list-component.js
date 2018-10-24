@@ -1,23 +1,31 @@
 (function () {
     'use strict';
+
     class ReactRecordList extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
                 records: []
             };
+        }
 
-            getFACTFinder((factfinder) => {
-                const {ResultDispatcher, FFCommunicationEventAggregator} = factfinder.communication;
+        async componentDidMount() {
+            const factfinder = await ff();
+            const {ResultDispatcher, FFCommunicationEventAggregator} = factfinder.communication;
 
-                //set records manually the first time
-                if (FFCommunicationEventAggregator.currentSearchResult) {
-                    this.setRecords(FFCommunicationEventAggregator.currentSearchResult.records || []);
-                }
+            //set records manually the first time
+            if (FFCommunicationEventAggregator.currentSearchResult) {
+                this.setRecords(FFCommunicationEventAggregator.currentSearchResult.records || []);
+            }
 
-                //get notified on each update from now on
-                ResultDispatcher.subscribe("records", this.setRecords.bind(this));
-            });
+            //get notified on each update from now on
+            this.ffKey = ResultDispatcher.subscribe("records", this.setRecords.bind(this));
+        }
+
+        async componentWillUnmount() {
+            const factfinder = await ff();
+            const {ResultDispatcher} = factfinder.communication;
+            ResultDispatcher.unsubscribe(this.ffKey);
         }
 
         setRecords(records) {
@@ -32,7 +40,7 @@
                     key: product.id,
                     onClick: () => {
                         const trackingBehavior = factfinder.elements.trackingBehavior;
-                        trackingBehavior._trackProductClick(void 0,  product, function () {
+                        trackingBehavior._trackProductClick(void 0, product, function () {
                             //tracking succeeded
                             window.location.href = `https://www.alpinetrek.co.uk${product.record.Deeplink}`;
                         });
